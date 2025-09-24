@@ -1,0 +1,220 @@
+{
+  "id": "paperless",
+  "name": "paperless",
+  "metaData": {
+    "name": "paperless",
+    "type": "app",
+    "buildInfo": {
+      "buildVersion": "1.0.0",
+      "buildName": "rspack-paperless"
+    },
+    "remoteEntry": {
+      "name": "remoteEntry.js",
+      "path": "",
+      "type": "global"
+    },
+    "types": {
+      "path": "",
+      "name": "",
+      "zip": "@mf-types.zip",
+      "api": "@mf-types.d.ts"
+    },
+    "globalName": "paperless",
+    "pluginVersion": "0.14.3",
+    "prefetchInterface": false,
+    "publicPath": "/"
+  },
+  "shared": [
+    {
+      "singleton": true,
+      "requiredVersion": "^18.0.0",
+      "shareScope": "default",
+      "name": "react",
+      "version": "18.0.0",
+      "eager": false,
+      "id": "paperless:react",
+      "assets": {
+        "js": {
+          "async": [],
+          "sync": [
+            "static/js/async/512.e37f17e6.js"
+          ]
+        },
+        "css": {
+          "async": [],
+          "sync": []
+        }
+      },
+      "usedIn": [
+        "./Paperless"
+      ]
+    },
+    {
+      "singleton": true,
+      "requiredVersion": "^18.0.0",
+      "shareScope": "default",
+      "name": "react-dom",
+      "version": "18.0.0",
+      "eager": false,
+      "id": "paperless:react-dom",
+      "assets": {
+        "js": {
+          "async": [],
+          "sync": [
+            "static/js/async/987.2e5610c5.js"
+          ]
+        },
+        "css": {
+          "async": [],
+          "sync": []
+        }
+      },
+      "usedIn": []
+    }
+  ],
+  "remotes": [
+    {
+      "alias": "remoteDesignSystem",
+      "consumingFederationContainerName": "paperless",
+      "federationContainerName": "remoteDesignSystem",
+      "moduleName": "DesignSystemShadowCss",
+      "usedIn": [
+        "src/web-components/entry-paperless.ts + 4 modules"
+      ],
+      "entry": "https://www-dev.invoicecloud-beta.com/ui-design-system/remoteEntry.js"
+    },
+    {
+      "alias": "remoteDesignSystem",
+      "consumingFederationContainerName": "paperless",
+      "federationContainerName": "remoteDesignSystem",
+      "moduleName": "Alert",
+      "usedIn": [
+        "src/web-components/entry-paperless.ts + 4 modules"
+      ],
+      "entry": "https://www-dev.invoicecloud-beta.com/ui-design-system/remoteEntry.js"
+    },
+    {
+      "alias": "remoteDesignSystem",
+      "consumingFederationContainerName": "paperless",
+      "federationContainerName": "remoteDesignSystem",
+      "moduleName": "Checkbox",
+      "usedIn": [
+        "src/web-components/entry-paperless.ts + 4 modules"
+      ],
+      "entry": "https://www-dev.invoicecloud-beta.com/ui-design-system/remoteEntry.js"
+    },
+    {
+      "alias": "remoteDesignSystem",
+      "consumingFederationContainerName": "paperless",
+      "federationContainerName": "remoteDesignSystem",
+      "moduleName": "Divider",
+      "usedIn": [
+        "src/web-components/entry-paperless.ts + 4 modules"
+      ],
+      "entry": "https://www-dev.invoicecloud-beta.com/ui-design-system/remoteEntry.js"
+    },
+    {
+      "alias": "remoteDesignSystem",
+      "consumingFederationContainerName": "paperless",
+      "federationContainerName": "remoteDesignSystem",
+      "moduleName": "Heading",
+      "usedIn": [
+        "src/web-components/entry-paperless.ts + 4 modules"
+      ],
+      "entry": "https://www-dev.invoicecloud-beta.com/ui-design-system/remoteEntry.js"
+    },
+    {
+      "alias": "remoteDesignSystem",
+      "consumingFederationContainerName": "paperless",
+      "federationContainerName": "remoteDesignSystem",
+      "moduleName": "Icon",
+      "usedIn": [
+        "src/web-components/entry-paperless.ts + 4 modules"
+      ],
+      "entry": "https://www-dev.invoicecloud-beta.com/ui-design-system/remoteEntry.js"
+    },
+    {
+      "alias": "remoteDesignSystem",
+      "consumingFederationContainerName": "paperless",
+      "federationContainerName": "remoteDesignSystem",
+      "moduleName": "InlineLink",
+      "usedIn": [
+        "src/web-components/entry-paperless.ts + 4 modules"
+      ],
+      "entry": "https://www-dev.invoicecloud-beta.com/ui-design-system/remoteEntry.js"
+    },
+    {
+      "alias": "remoteDesignSystem",
+      "consumingFederationContainerName": "paperless",
+      "federationContainerName": "remoteDesignSystem",
+      "moduleName": "Label",
+      "usedIn": [
+        "src/web-components/entry-paperless.ts + 4 modules"
+      ],
+      "entry": "https://www-dev.invoicecloud-beta.com/ui-design-system/remoteEntry.js"
+    },
+    {
+      "alias": "remoteDesignSystem",
+      "consumingFederationContainerName": "paperless",
+      "federationContainerName": "remoteDesignSystem",
+      "moduleName": "Paragraph",
+      "usedIn": [
+        "src/web-components/entry-paperless.ts + 4 modules"
+      ],
+      "entry": "https://www-dev.invoicecloud-beta.com/ui-design-system/remoteEntry.js"
+    },
+    {
+      "alias": "remoteDesignSystem",
+      "consumingFederationContainerName": "paperless",
+      "federationContainerName": "remoteDesignSystem",
+      "moduleName": "PrimaryButton",
+      "usedIn": [
+        "src/web-components/entry-paperless.ts + 4 modules"
+      ],
+      "entry": "https://www-dev.invoicecloud-beta.com/ui-design-system/remoteEntry.js"
+    },
+    {
+      "alias": "remoteDesignSystem",
+      "consumingFederationContainerName": "paperless",
+      "federationContainerName": "remoteDesignSystem",
+      "moduleName": "DynamicTable",
+      "usedIn": [
+        "src/web-components/entry-paperless.ts + 4 modules"
+      ],
+      "entry": "https://www-dev.invoicecloud-beta.com/ui-design-system/remoteEntry.js"
+    },
+    {
+      "alias": "remoteDesignSystem",
+      "consumingFederationContainerName": "paperless",
+      "federationContainerName": "remoteDesignSystem",
+      "moduleName": "DesignSystemRootStyles",
+      "usedIn": [
+        "src/bootstrap.tsx + 4 modules"
+      ],
+      "entry": "https://www-dev.invoicecloud-beta.com/ui-design-system/remoteEntry.js"
+    }
+  ],
+  "exposes": [
+    {
+      "path": "./Paperless",
+      "id": "paperless:Paperless",
+      "name": "Paperless",
+      "requires": [
+        "react"
+      ],
+      "file": "src\\components\\Paperless.tsx",
+      "assets": {
+        "js": {
+          "sync": [
+            "static/js/async/__federation_expose_Paperless.6287b8e8.js"
+          ],
+          "async": []
+        },
+        "css": {
+          "sync": [],
+          "async": []
+        }
+      }
+    }
+  ]
+}
