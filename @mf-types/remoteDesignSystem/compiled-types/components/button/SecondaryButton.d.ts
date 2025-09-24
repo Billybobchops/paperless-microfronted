@@ -1,0 +1,15 @@
+import type { Spacing } from '@styles/spacing';
+import React from 'react';
+import { ThemeVariant } from '../types';
+interface ButtonProps {
+    clickHandler?: () => void;
+    disabled: boolean;
+    icon?: React.ReactElement<React.SVGProps<SVGSVGElement>>;
+    iconPosition?: 'start' | 'end';
+    spacing?: Spacing | Spacing[];
+    text: string;
+    type?: 'button' | 'submit';
+    variant?: ThemeVariant;
+}
+declare const SecondaryButton: React.FC<ButtonProps>;
+export default SecondaryButton;

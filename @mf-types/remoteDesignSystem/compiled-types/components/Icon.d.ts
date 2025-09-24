@@ -1,0 +1,34 @@
+import React from "react";
+interface IconProps {
+    fill?: string;
+    size?: 's' | 'm' | 'l' | 'xl' | 'xxl';
+}
+export declare const ICFooterLogo: React.FC<IconProps>;
+export declare const AutoPay: React.FC<IconProps>;
+export declare const Paperless: React.FC<IconProps>;
+export declare const PayByText: React.FC<IconProps>;
+export declare const Plus: React.FC<IconProps>;
+export declare const Info: React.FC<IconProps>;
+export declare const MenuClose: React.FC<IconProps>;
+export declare const ErrorIcon: React.FC<IconProps>;
+export declare const Success: React.FC<IconProps>;
+export declare const SearchDefault: React.FC<IconProps>;
+export declare const NewWindow: React.FC<IconProps>;
+export declare const Warning: React.FC<IconProps>;
+export declare const TableSortArrow: React.FC<IconProps>;
+export declare const TableSortArrows: React.FC<IconProps>;
+export declare const FirstPage: React.FC<IconProps>;
+export declare const LastPage: React.FC<IconProps>;
+export declare const ChevronRight: React.FC<IconProps>;
+export declare const ChevronDown: React.FC<IconProps>;
+export declare const ChevronLeft: React.FC<IconProps>;
+export declare const Kebab: React.FC<IconProps>;
+export declare const Home: React.FC<IconProps>;
+export declare const Visa: React.FC<IconProps>;
+export declare const Mastercard: React.FC<IconProps>;
+export declare const Discover: React.FC<IconProps>;
+export declare const Amex: React.FC<IconProps>;
+export declare const GooglePay: React.FC<IconProps>;
+export declare const ApplePay: React.FC<IconProps>;
+export declare const Venmo: React.FC<IconProps>;
+export {};

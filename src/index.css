@@ -1,0 +1,5 @@
+.displayContainer {
+    max-width: 1000px;
+    margin: var(--invoicecloud-spacing-l) auto;
+    padding: var(--invoicecloud-spacing-m);
+}
