@@ -7,7 +7,7 @@ export default createModuleFederationConfig({
     },
     remotes: {
         remoteDesignSystem:
-            'remoteDesignSystem@https://www-dev.invoicecloud-beta.com/ui-design-system/remoteEntry.js',
+            'remoteDesignSystem@https://uidesignsystem.netlify.app/remoteEntry.js',
     },
     filename: 'remoteEntry.js',
     shared: {
