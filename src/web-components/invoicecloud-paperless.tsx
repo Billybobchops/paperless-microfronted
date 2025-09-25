@@ -1,6 +1,6 @@
 import React from 'react';
 import { createRoot } from 'react-dom/client';
-import Paperless from '../components/Paperless';
+import PaperlessView from './PaperlessView';
 
 class InvoiceCloudPaperlessElement extends HTMLElement {
     private reactRoot: ReturnType<typeof createRoot> | null = null;
@@ -38,18 +38,53 @@ class InvoiceCloudPaperlessElement extends HTMLElement {
         this.showLoading();
         
         try {
-            // 1) Dynamically import the remote to create an async boundary
-            const {
-                getDesignSystemStyleSheet,
-                getDesignSystemCssText,
-            } = await import('remoteDesignSystem/DesignSystemShadowCss');
+            // 1) Dynamically import the remote styles and components to create async boundaries
+            const [
+                { getDesignSystemStyleSheet, getDesignSystemCssText },
+                { default: Alert },
+                { default: Checkbox },
+                { default: Divider },
+                { default: Heading },
+                { default: InlineLink },
+                { default: Label },
+                { default: Paragraph },
+                { default: PrimaryButton },
+                { default: DynamicTable },
+                { ChevronRight },
+            ] = await Promise.all([
+                import('remoteDesignSystem/DesignSystemShadowCss'),
+                import('remoteDesignSystem/Alert'),
+                import('remoteDesignSystem/Checkbox'),
+                import('remoteDesignSystem/Divider'),
+                import('remoteDesignSystem/Heading'),
+                import('remoteDesignSystem/InlineLink'),
+                import('remoteDesignSystem/Label'),
+                import('remoteDesignSystem/Paragraph'),
+                import('remoteDesignSystem/PrimaryButton'),
+                import('remoteDesignSystem/DynamicTable'),
+                import('remoteDesignSystem/Icon'),
+            ]);
 
             // 2) Adopt stylesheet (or fallback) after the remote is ready
             this.setupStyles(getDesignSystemStyleSheet, getDesignSystemCssText);
 
-            // 3) Render React after styles are in place
+            // 3) Create the design system object
+            const ds = {
+                Alert,
+                Checkbox,
+                Divider,
+                Heading,
+                InlineLink,
+                Label,
+                Paragraph,
+                PrimaryButton,
+                DynamicTable,
+                ChevronRight,
+            };
+
+            // 4) Render React with injected dependencies
             this.reactRoot = createRoot(this.container);
-            this.reactRoot.render(React.createElement(Paperless));
+            this.reactRoot.render(React.createElement(PaperlessView, { ds }));
         } catch (error) {
             console.error('Failed to initialize InvoiceCloud Paperless element:', error);
             this.showError('Failed to initialize component');
