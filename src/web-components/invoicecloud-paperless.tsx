@@ -65,11 +65,6 @@ class InvoiceCloudPaperlessElement extends HTMLElement {
                 import('remoteDesignSystem/Icon'),
             ]);
 
-			// quick sanity check
-			const css = getDesignSystemCssText();
-			console.log('Design system CSS length:', css.length);
-			console.log('First 200 chars:\n', css.slice(0, 200));
-
             // 2) Adopt stylesheet (or fallback) after the remote is ready
             this.setupStyles(getDesignSystemStyleSheet, getDesignSystemCssText);
 
@@ -102,9 +97,7 @@ class InvoiceCloudPaperlessElement extends HTMLElement {
             if (this.shadow.adoptedStyleSheets !== undefined) {
                 const sheet = getDesignSystemStyleSheet();
                 this.shadow.adoptedStyleSheets = [...this.shadow.adoptedStyleSheets, sheet];
-				console.log('adoptedStyleSheets count:', this.shadow.adoptedStyleSheets.length);
             } else {
-				console.log('adoptedStyleSheets not supported, using fallback');
                 // Fallback approach with <style> injection
                 const style = document.createElement('style');
                 style.textContent = getDesignSystemCssText();
