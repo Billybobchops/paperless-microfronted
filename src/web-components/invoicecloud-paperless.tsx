@@ -1,41 +1,72 @@
 import React from 'react';
 import { createRoot } from 'react-dom/client';
-import { getDesignSystemStyleSheet, getDesignSystemCssText } from 'remoteDesignSystem/DesignSystemShadowCss';
 import Paperless from '../components/Paperless';
 
 class InvoiceCloudPaperlessElement extends HTMLElement {
-    private shadowRoot: ShadowRoot;
-    private reactRoot: any;
-    private container: HTMLDivElement;
+    private reactRoot: ReturnType<typeof createRoot> | null = null;
+    private container!: HTMLDivElement;
+    private shadow!: ShadowRoot;
 
     constructor() {
         super();
         
         // Create shadow root
-        this.shadowRoot = this.attachShadow({ mode: 'open' });
+        this.shadow = this.attachShadow({ mode: 'open' });
         
         // Create container for React
         this.container = document.createElement('div');
-        this.shadowRoot.appendChild(this.container);
-        
-        // Set up styles
-        this.setupStyles();
-        
-        // Initialize React
-        this.initializeReact();
+        this.shadow.appendChild(this.container);
     }
 
-    private setupStyles() {
+    connectedCallback() {
+        // Initialize asynchronously so MF can fetch/init the remote container
+        this.init().catch(err => {
+            console.error('Paperless init failed:', err);
+            this.showError('Failed to initialize component');
+        });
+    }
+
+    disconnectedCallback() {
+        // Element is removed from the DOM
+        console.log('InvoiceCloud Paperless element disconnected from DOM');
+        this.reactRoot?.unmount();
+        this.reactRoot = null; // Clear reference
+    }
+
+    private async init() {
+        // Show loading state
+        this.showLoading();
+        
+        try {
+            // 1) Dynamically import the remote to create an async boundary
+            const {
+                getDesignSystemStyleSheet,
+                getDesignSystemCssText,
+            } = await import('remoteDesignSystem/DesignSystemShadowCss');
+
+            // 2) Adopt stylesheet (or fallback) after the remote is ready
+            this.setupStyles(getDesignSystemStyleSheet, getDesignSystemCssText);
+
+            // 3) Render React after styles are in place
+            this.reactRoot = createRoot(this.container);
+            this.reactRoot.render(React.createElement(Paperless));
+        } catch (error) {
+            console.error('Failed to initialize InvoiceCloud Paperless element:', error);
+            this.showError('Failed to initialize component');
+        }
+    }
+
+    private setupStyles(getDesignSystemStyleSheet: () => CSSStyleSheet, getDesignSystemCssText: () => string) {
         try {
             // Modern approach with adoptedStyleSheets
-            if (this.shadowRoot.adoptedStyleSheets !== undefined) {
+            if (this.shadow.adoptedStyleSheets !== undefined) {
                 const sheet = getDesignSystemStyleSheet();
-                this.shadowRoot.adoptedStyleSheets = [sheet];
+                this.shadow.adoptedStyleSheets = [...this.shadow.adoptedStyleSheets, sheet];
             } else {
                 // Fallback approach with <style> injection
                 const style = document.createElement('style');
                 style.textContent = getDesignSystemCssText();
-                this.shadowRoot.appendChild(style);
+                this.shadow.appendChild(style);
             }
         } catch (error) {
             console.error('Failed to set up design system styles:', error);
@@ -50,18 +81,21 @@ class InvoiceCloudPaperlessElement extends HTMLElement {
                     box-sizing: border-box;
                 }
             `;
-            this.shadowRoot.appendChild(fallbackStyle);
+            this.shadow.appendChild(fallbackStyle);
         }
     }
 
-    private initializeReact() {
-        try {
-            this.reactRoot = createRoot(this.container);
-            this.reactRoot.render(React.createElement(Paperless));
-        } catch (error) {
-            console.error('Failed to initialize React in InvoiceCloud Paperless element:', error);
-            this.showError('Failed to initialize component');
-        }
+    private showLoading() {
+        this.container.innerHTML = `
+            <div style="
+                padding: 2rem;
+                text-align: center;
+                font-family: system-ui, -apple-system, sans-serif;
+                color: #666;
+            ">
+                Loading Paperless Component...
+            </div>
+        `;
     }
 
     private showError(message: string) {
@@ -77,19 +111,6 @@ class InvoiceCloudPaperlessElement extends HTMLElement {
                 <strong>InvoiceCloud Paperless Error:</strong> ${message}
             </div>
         `;
-    }
-
-    connectedCallback() {
-        // Element is added to the DOM
-        console.log('InvoiceCloud Paperless element connected to DOM');
-    }
-
-    disconnectedCallback() {
-        // Element is removed from the DOM
-        console.log('InvoiceCloud Paperless element disconnected from DOM');
-        if (this.reactRoot) {
-            this.reactRoot.unmount();
-        }
     }
 
     // Handle attribute changes if needed in the future

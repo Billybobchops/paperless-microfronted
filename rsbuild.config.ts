@@ -38,16 +38,8 @@ export default defineConfig({
     tools: {
         rspack: {
             optimization: {
-                splitChunks: {
-                    chunks: (chunk) => {
-                        // Don't split chunks for the paperless element entry
-                        return chunk.name !== 'invoicecloud-paperless';
-                    },
-                    cacheGroups: {
-                        default: false,
-                        vendors: false,
-                    },
-                },
+                splitChunks: false,
+				runtimeChunk: false,
             },
         },
     },
