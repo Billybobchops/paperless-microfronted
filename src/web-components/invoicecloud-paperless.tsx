@@ -67,9 +67,11 @@ class InvoiceCloudPaperlessElement extends HTMLElement {
                 import('remoteDesignSystem/Icon'),
             ]);
 
+            console.log('✅ All modules loaded successfully');
+
             // 2) Adopt stylesheets (or fallbacks) after the remote is ready
-            this.setupStyles(getDesignSystemStyleSheet, getDesignSystemCssText);
-            this.setupStyles(getComponentStylesStyleSheet, getComponentStylesCssText);
+            this.setupStyles('Design System', getDesignSystemStyleSheet, getDesignSystemCssText);
+            this.setupStyles('Component', getComponentStylesStyleSheet, getComponentStylesCssText);
 
             // 3) Create the design system object
             const ds = {
@@ -88,26 +90,47 @@ class InvoiceCloudPaperlessElement extends HTMLElement {
             // 4) Render React with injected dependencies
             this.reactRoot = createRoot(this.container);
             this.reactRoot.render(React.createElement(PaperlessView, { ds }));
+            
+            console.log('✅ React component rendered');
         } catch (error) {
             console.error('Failed to initialize InvoiceCloud Paperless element:', error);
             this.showError('Failed to initialize component');
         }
     }
 
-    private setupStyles(getStyleSheet: () => CSSStyleSheet, getCssText: () => string) {
+    private setupStyles(styleType: string, getStyleSheet: () => CSSStyleSheet, getCssText: () => string) {
         try {
+            console.log(`🎨 Setting up ${styleType} styles...`);
+            
             // Modern approach with adoptedStyleSheets
             if (this.shadow.adoptedStyleSheets !== undefined) {
+                console.log(`📋 Using adoptedStyleSheets for ${styleType}`);
                 const sheet = getStyleSheet();
-                this.shadow.adoptedStyleSheets = [...(this.shadow.adoptedStyleSheets || []), sheet];
+                console.log(`📄 ${styleType} stylesheet created:`, sheet);
+                
+                // Get current stylesheets
+                const currentSheets = this.shadow.adoptedStyleSheets || [];
+                console.log(`📚 Current stylesheets count: ${currentSheets.length}`);
+                
+                // Add new stylesheet
+                this.shadow.adoptedStyleSheets = [...currentSheets, sheet];
+                console.log(`✅ ${styleType} stylesheet adopted. Total: ${this.shadow.adoptedStyleSheets.length}`);
+                
+                // Debug: Log the CSS content
+                const cssText = getCssText();
+                console.log(`📝 ${styleType} CSS content length: ${cssText.length} characters`);
+                console.log(`📝 ${styleType} CSS preview:`, cssText.substring(0, 200) + '...');
+                
             } else {
+                console.log(`📋 Using <style> injection for ${styleType} (adoptedStyleSheets not supported)`);
                 // Fallback approach with <style> injection
                 const style = document.createElement('style');
                 style.textContent = getCssText();
                 this.shadow.appendChild(style);
+                console.log(`✅ ${styleType} styles injected via <style> element`);
             }
         } catch (error) {
-            console.error('Failed to set up styles:', error);
+            console.error(`❌ Failed to set up ${styleType} styles:`, error);
             // Add a basic style as fallback
             const fallbackStyle = document.createElement('style');
             fallbackStyle.textContent = `
@@ -120,6 +143,7 @@ class InvoiceCloudPaperlessElement extends HTMLElement {
                 }
             `;
             this.shadow.appendChild(fallbackStyle);
+            console.log(`🔄 Added fallback styles for ${styleType}`);
         }
     }
 
