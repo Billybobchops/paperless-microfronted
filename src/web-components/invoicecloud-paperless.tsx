@@ -41,6 +41,7 @@ class InvoiceCloudPaperlessElement extends HTMLElement {
             // 1) Dynamically import the remote styles and components to create async boundaries
             const [
                 { getDesignSystemStyleSheet, getDesignSystemCssText },
+                { getComponentStylesStyleSheet, getComponentStylesCssText },
                 { default: Alert },
                 { default: Checkbox },
                 { default: Divider },
@@ -53,6 +54,7 @@ class InvoiceCloudPaperlessElement extends HTMLElement {
                 { ChevronRight },
             ] = await Promise.all([
                 import('remoteDesignSystem/DesignSystemShadowCss'),
+                import('remoteDesignSystem/ComponentStylesCss'),
                 import('remoteDesignSystem/Alert'),
                 import('remoteDesignSystem/Checkbox'),
                 import('remoteDesignSystem/Divider'),
@@ -65,8 +67,9 @@ class InvoiceCloudPaperlessElement extends HTMLElement {
                 import('remoteDesignSystem/Icon'),
             ]);
 
-            // 2) Adopt stylesheet (or fallback) after the remote is ready
+            // 2) Adopt stylesheets (or fallbacks) after the remote is ready
             this.setupStyles(getDesignSystemStyleSheet, getDesignSystemCssText);
+            this.setupStyles(getComponentStylesStyleSheet, getComponentStylesCssText);
 
             // 3) Create the design system object
             const ds = {
@@ -91,20 +94,20 @@ class InvoiceCloudPaperlessElement extends HTMLElement {
         }
     }
 
-    private setupStyles(getDesignSystemStyleSheet: () => CSSStyleSheet, getDesignSystemCssText: () => string) {
+    private setupStyles(getStyleSheet: () => CSSStyleSheet, getCssText: () => string) {
         try {
             // Modern approach with adoptedStyleSheets
             if (this.shadow.adoptedStyleSheets !== undefined) {
-                const sheet = getDesignSystemStyleSheet();
-                this.shadow.adoptedStyleSheets = [...this.shadow.adoptedStyleSheets, sheet];
+                const sheet = getStyleSheet();
+                this.shadow.adoptedStyleSheets = [...(this.shadow.adoptedStyleSheets || []), sheet];
             } else {
                 // Fallback approach with <style> injection
                 const style = document.createElement('style');
-                style.textContent = getDesignSystemCssText();
+                style.textContent = getCssText();
                 this.shadow.appendChild(style);
             }
         } catch (error) {
-            console.error('Failed to set up design system styles:', error);
+            console.error('Failed to set up styles:', error);
             // Add a basic style as fallback
             const fallbackStyle = document.createElement('style');
             fallbackStyle.textContent = `
