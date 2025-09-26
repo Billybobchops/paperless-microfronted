@@ -11,7 +11,7 @@ class InvoiceCloudPaperlessElement extends HTMLElement {
         super();
         
         // Create shadow root
-        this.shadow = this.attachShadow({ mode: 'open' });
+        this.shadow = this.attachShadow({ mode: 'closed' });
         
         // Create container for React
         this.container = document.createElement('div');
@@ -103,32 +103,32 @@ class InvoiceCloudPaperlessElement extends HTMLElement {
             console.log(`🎨 Setting up ${styleType} styles...`);
             
             // Modern approach with adoptedStyleSheets
-            // if (this.shadow.adoptedStyleSheets !== undefined) {
-            //     console.log(`📋 Using adoptedStyleSheets for ${styleType}`);
-            //     const sheet = getStyleSheet();
-            //     console.log(`📄 ${styleType} stylesheet created:`, sheet);
+            if (this.shadow.adoptedStyleSheets !== undefined) {
+                console.log(`📋 Using adoptedStyleSheets for ${styleType}`);
+                const sheet = getStyleSheet();
+                console.log(`📄 ${styleType} stylesheet created:`, sheet);
                 
-            //     // Get current stylesheets
-            //     const currentSheets = this.shadow.adoptedStyleSheets || [];
-            //     console.log(`📚 Current stylesheets count: ${currentSheets.length}`);
+                // Get current stylesheets
+                const currentSheets = this.shadow.adoptedStyleSheets || [];
+                console.log(`📚 Current stylesheets count: ${currentSheets.length}`);
                 
-            //     // Add new stylesheet
-            //     this.shadow.adoptedStyleSheets = [...currentSheets, sheet];
-            //     console.log(`✅ ${styleType} stylesheet adopted. Total: ${this.shadow.adoptedStyleSheets.length}`);
+                // Add new stylesheet
+                this.shadow.adoptedStyleSheets = [...currentSheets, sheet];
+                console.log(`✅ ${styleType} stylesheet adopted. Total: ${this.shadow.adoptedStyleSheets.length}`);
                 
-            //     // Debug: Log the CSS content
-            //     const cssText = getCssText();
-            //     console.log(`📝 ${styleType} CSS content length: ${cssText.length} characters`);
-            //     console.log(`📝 ${styleType} CSS preview:`, cssText.substring(0, 200) + '...');
+                // Debug: Log the CSS content
+                const cssText = getCssText();
+                console.log(`📝 ${styleType} CSS content length: ${cssText.length} characters`);
+                console.log(`📝 ${styleType} CSS preview:`, cssText.substring(0, 200) + '...');
                 
-            // } else {
+            } else {
                 console.log(`📋 Using <style> injection for ${styleType} (adoptedStyleSheets not supported)`);
                 // Fallback approach with <style> injection
                 const style = document.createElement('style');
                 style.textContent = getCssText();
                 this.shadow.appendChild(style);
                 console.log(`✅ ${styleType} styles injected via <style> element`);
-            // }
+            }
         } catch (error) {
             console.error(`❌ Failed to set up ${styleType} styles:`, error);
             // Add a basic style as fallback
