@@ -310,10 +310,10 @@ class InvoiceCloudPaperlessElement extends HTMLElement {
         this.container.innerHTML = `
             <div style="
                 padding: 1rem;
-                border: 1px solid E74C3C_1;
+                border: 1px solid red;
                 border-radius: 4px;
-                background-color: FDF2F2_1;
-                color: C53030_1;
+                background-color: #FDF2F2;
+                color: #fff;
                 font-family: system-ui, -apple-system, sans-serif;
             ">
                 <strong>InvoiceCloud Paperless Error:</strong> ${message}

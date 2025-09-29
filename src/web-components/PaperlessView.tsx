@@ -190,7 +190,8 @@
 // }
 
 import React, { useId, useState } from 'react';
-import { useShadowDOM, ShadowDOMProvider } from 'remoteDesignSystem/useShadowDOM';
+import { useShadowDOM } from 'remoteDesignSystem/useShadowDOM';
+import { ShadowDOMProvider } from 'remoteDesignSystem/ShadowDOMProvider';
 import { getDesignSystemCssText, getComponentStylesCssText } from 'remoteDesignSystem/ComponentStylesCss';
 import { dummyPaperlessRowData, paperlessActionsFunction } from '@components/TableDummyData';
 
