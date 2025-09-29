@@ -313,7 +313,7 @@ class InvoiceCloudPaperlessElement extends HTMLElement {
                 border: 1px solid red;
                 border-radius: 4px;
                 background-color: #FDF2F2;
-                color: #fff;
+                color: #000;
                 font-family: system-ui, -apple-system, sans-serif;
             ">
                 <strong>InvoiceCloud Paperless Error:</strong> ${message}
