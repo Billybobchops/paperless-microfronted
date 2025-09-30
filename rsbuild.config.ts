@@ -41,6 +41,9 @@ export default defineConfig({
                 splitChunks: false,
 				runtimeChunk: false,
             },
+			// output: {
+			// 	publicPath: 'auto',
+			// },
         },
     },
 });

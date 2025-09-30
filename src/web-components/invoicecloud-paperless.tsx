@@ -197,7 +197,7 @@
 
 import React from 'react';
 import { createRoot } from 'react-dom/client';
-// import PaperlessView from './PaperlessView';
+import PaperlessView from './PaperlessView';
 
 class InvoiceCloudPaperlessElement extends HTMLElement {
     private reactRoot: ReturnType<typeof createRoot> | null = null;
@@ -248,7 +248,7 @@ class InvoiceCloudPaperlessElement extends HTMLElement {
                 { default: PrimaryButton },
                 { default: DynamicTable },
                 { ChevronRight },
-                { default: PaperlessView },
+                // { default: PaperlessView },
             ] = await Promise.all([
                 import('remoteDesignSystem/DesignSystemShadowCss'),
                 import('remoteDesignSystem/ComponentStylesCss'),
@@ -264,7 +264,7 @@ class InvoiceCloudPaperlessElement extends HTMLElement {
                 import('remoteDesignSystem/PrimaryButton'),
                 import('remoteDesignSystem/DynamicTable'),
                 import('remoteDesignSystem/Icon'),
-                import('./PaperlessView'),
+                // import('./PaperlessView'),
             ]);
 
             console.log('✅ All modules loaded successfully');
