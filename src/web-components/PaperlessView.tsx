@@ -211,9 +211,11 @@ export type DS = {
 type Props = {
     ds: DS;
     shadowRoot?: ShadowRoot;
+	useShadowDOM: any;
+	ShadowDOMProvider: any;
 };
 
-export default function PaperlessView({ ds, shadowRoot }: Props) {
+export default function PaperlessView({ ds, shadowRoot, useShadowDOM, ShadowDOMProvider }: Props) {
     const { Alert, Checkbox, Divider, Heading, InlineLink, Label, Paragraph, PrimaryButton, DynamicTable, ChevronRight } = ds;
 
     // Use the hook for setup only (no rendering)

@@ -197,7 +197,7 @@
 
 import React from 'react';
 import { createRoot } from 'react-dom/client';
-import PaperlessView from './PaperlessView';
+// import PaperlessView from './PaperlessView';
 
 class InvoiceCloudPaperlessElement extends HTMLElement {
     private reactRoot: ReturnType<typeof createRoot> | null = null;
@@ -217,7 +217,7 @@ class InvoiceCloudPaperlessElement extends HTMLElement {
 
     connectedCallback() {
         // Initialize asynchronously so MF can fetch/init the remote container
-        this.init().catch(err => {
+        this.init().catch((err) => {
             console.error('Paperless init failed:', err);
             this.showError('Failed to initialize component');
         });
@@ -235,8 +235,8 @@ class InvoiceCloudPaperlessElement extends HTMLElement {
         this.showLoading();
 
         try {
-            // 1) Dynamically import the remote components
             const [
+                { useShadowDOM, ShadowDOMProvider }, // Add these here
                 { default: Alert },
                 { default: Checkbox },
                 { default: Divider },
@@ -247,8 +247,11 @@ class InvoiceCloudPaperlessElement extends HTMLElement {
                 { default: PrimaryButton },
                 { default: DynamicTable },
                 { ChevronRight },
-                // { default: PaperlessView },
+                { default: PaperlessView },
             ] = await Promise.all([
+                import('remoteDesignSystem/DesignSystemShadowCss'),
+                import('remoteDesignSystem/ComponentStylesCss'),
+                import('remoteDesignSystem/useShadowDOM'), // Add this
                 import('remoteDesignSystem/Alert'),
                 import('remoteDesignSystem/Checkbox'),
                 import('remoteDesignSystem/Divider'),
@@ -259,7 +262,7 @@ class InvoiceCloudPaperlessElement extends HTMLElement {
                 import('remoteDesignSystem/PrimaryButton'),
                 import('remoteDesignSystem/DynamicTable'),
                 import('remoteDesignSystem/Icon'),
-                // import('./PaperlessView'),
+                import('./PaperlessView'),
             ]);
 
             console.log('✅ All modules loaded successfully');
@@ -282,14 +285,21 @@ class InvoiceCloudPaperlessElement extends HTMLElement {
             this.reactRoot = createRoot(this.container);
             this.reactRoot.render(
                 React.createElement(PaperlessView, {
-                    ds,                    // Pass the design system components
-                    shadowRoot: this.shadow // Pass the shadow root
+                    ds,
+                    shadowRoot: this.shadow,
+                    useShadowDOM, // Pass the hook
+                    ShadowDOMProvider, // Pass the provider
                 })
             );
 
-            console.log('✅ React component rendered with shadow DOM integration');
+            console.log(
+                '✅ React component rendered with shadow DOM integration'
+            );
         } catch (error) {
-            console.error('Failed to initialize InvoiceCloud Paperless element:', error);
+            console.error(
+                'Failed to initialize InvoiceCloud Paperless element:',
+                error
+            );
             this.showError('Failed to initialize component');
         }
     }
@@ -325,9 +335,14 @@ class InvoiceCloudPaperlessElement extends HTMLElement {
 
 export function registerInvoiceCloudPaperlessElement() {
     if (!customElements.get('invoicecloud-paperless')) {
-        customElements.define('invoicecloud-paperless', InvoiceCloudPaperlessElement);
+        customElements.define(
+            'invoicecloud-paperless',
+            InvoiceCloudPaperlessElement
+        );
         console.log('InvoiceCloud Paperless custom element registered');
     } else {
-        console.warn('InvoiceCloud Paperless custom element already registered');
+        console.warn(
+            'InvoiceCloud Paperless custom element already registered'
+        );
     }
 }
