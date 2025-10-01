@@ -248,7 +248,7 @@ class InvoiceCloudPaperlessElement extends HTMLElement {
                 { default: PrimaryButton },
                 { default: DynamicTable },
                 { ChevronRight },
-				// { getDesignSystemCssText, getComponentStylesCssText },
+				{ getDesignSystemCssText, getComponentStylesCssText },
             ] = await Promise.all([
                 import('remoteDesignSystem/useShadowDOM'), 
                 import('remoteDesignSystem/ShadowDOMProvider'), 
@@ -262,8 +262,8 @@ class InvoiceCloudPaperlessElement extends HTMLElement {
                 import('remoteDesignSystem/PrimaryButton'),
                 import('remoteDesignSystem/DynamicTable'),
                 import('remoteDesignSystem/Icon'),
-                // import('remoteDesignSystem/DesignSystemShadowCss'),
-                // import('remoteDesignSystem/ComponentStylesCss'),
+                import('remoteDesignSystem/DesignSystemShadowCss'),
+                import('remoteDesignSystem/ComponentStylesCss'),
             ]);
 
             console.log('✅ All modules loaded successfully');
