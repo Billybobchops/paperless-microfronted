@@ -190,7 +190,7 @@
 // }
 
 import React, { useId, useState } from 'react';
-import { getDesignSystemCssText, getComponentStylesCssText } from 'remoteDesignSystem/ComponentStylesCss';
+// import { getDesignSystemCssText, getComponentStylesCssText } from 'remoteDesignSystem/ComponentStylesCss';
 import { dummyPaperlessRowData, paperlessActionsFunction } from '@components/TableDummyData';
 
 export type DS = {
@@ -211,24 +211,43 @@ type Props = {
     shadowRoot?: ShadowRoot;
 	useShadowDOM: any;
 	ShadowDOMProvider: any;
+	getDesignSystemCssText: () => string;
+	getComponentStylesCssText: () => string;
 };
 
-export default function PaperlessView({ ds, shadowRoot, useShadowDOM, ShadowDOMProvider }: Props) {
-    const { Alert, Checkbox, Divider, Heading, InlineLink, Label, Paragraph, PrimaryButton, DynamicTable, ChevronRight } = ds;
+export default function PaperlessView({
+    ds,
+    shadowRoot,
+    useShadowDOM,
+    ShadowDOMProvider,
+    getDesignSystemCssText,
+    getComponentStylesCssText,
+}: Props) {
+    const {
+        Alert,
+        Checkbox,
+        Divider,
+        Heading,
+        InlineLink,
+        Label,
+        Paragraph,
+        PrimaryButton,
+        DynamicTable,
+        ChevronRight,
+    } = ds;
 
     // Use the hook for setup only (no rendering)
     const { render } = useShadowDOM({
         existingShadowRoot: shadowRoot!,
-        styles: [
-            getDesignSystemCssText(),
-            getComponentStylesCssText(),
-        ],
+        styles: [getDesignSystemCssText(), getComponentStylesCssText()],
     });
 
     const termsConditionsId = useId();
     const [showAlert, setShowAlert] = useState(false);
     const [isChecked, setIsChecked] = useState(false);
-    const [paperlessCheckboxStates, setPaperlessCheckboxStates] = useState<Record<string, boolean>>({});
+    const [paperlessCheckboxStates, setPaperlessCheckboxStates] = useState<
+        Record<string, boolean>
+    >({});
 
     // Helper function to get the base paperless state from row status
     const getBasePaperlessState = (row: Record<string, unknown>) => {
@@ -263,7 +282,7 @@ export default function PaperlessView({ ds, shadowRoot, useShadowDOM, ShadowDOMP
 
     // Generic function to check for specific types of changes
     const hasChangesOfType = (changeType: 'opt-in' | 'opt-out') => {
-        return dummyPaperlessRowData.some(row => {
+        return dummyPaperlessRowData.some((row) => {
             const originalState = getOriginalPaperlessState(row);
             const currentState = getCurrentPaperlessState(row);
 
@@ -285,16 +304,23 @@ export default function PaperlessView({ ds, shadowRoot, useShadowDOM, ShadowDOMP
         setIsChecked(!isChecked);
     };
 
-    const handlePaperlessCheckboxChange = (accountNumber: string, checked: boolean) => {
-        setPaperlessCheckboxStates(prev => {
+    const handlePaperlessCheckboxChange = (
+        accountNumber: string,
+        checked: boolean
+    ) => {
+        setPaperlessCheckboxStates((prev) => {
             const newState = {
                 ...prev,
-                [accountNumber]: checked
+                [accountNumber]: checked,
             };
             return newState;
         });
 
-        console.log(`Paperless enrollment changed for account ${accountNumber}: ${checked ? 'enrolled' : 'unenrolled'}`);
+        console.log(
+            `Paperless enrollment changed for account ${accountNumber}: ${
+                checked ? 'enrolled' : 'unenrolled'
+            }`
+        );
     };
 
     const paperlessColumnConfig = {
@@ -305,7 +331,11 @@ export default function PaperlessView({ ds, shadowRoot, useShadowDOM, ShadowDOMP
             },
             getDisabled: (value: unknown, row: Record<string, unknown>) => {
                 const status = String(row.status).toLowerCase();
-                return status === 'pending' || status === 'needs verification' || status === 'enrolled (required)';
+                return (
+                    status === 'pending' ||
+                    status === 'needs verification' ||
+                    status === 'enrolled (required)'
+                );
             },
             getOnChange: (value: unknown, row: Record<string, unknown>) => {
                 return (isOn: boolean) => {
@@ -313,11 +343,15 @@ export default function PaperlessView({ ds, shadowRoot, useShadowDOM, ShadowDOMP
                     const status = String(row.status).toLowerCase();
 
                     // Only allow changes if not disabled
-                    if (status !== 'pending' && status !== 'needs verification' && status !== 'enrolled (required)') {
+                    if (
+                        status !== 'pending' &&
+                        status !== 'needs verification' &&
+                        status !== 'enrolled (required)'
+                    ) {
                         handlePaperlessCheckboxChange(accountNumber, isOn);
                     }
                 };
-            }
+            },
         },
         status: {
             cellType: 'badge' as const,
@@ -329,36 +363,42 @@ export default function PaperlessView({ ds, shadowRoot, useShadowDOM, ShadowDOMP
                 if (status === 'enrolled (required)') return 'success';
 
                 return 'info';
-            }
-        }
+            },
+        },
     };
 
-    const isButtonEnabled = hasOptOutChanges() || (hasOptInChanges() && isChecked);
+    const isButtonEnabled =
+        hasOptOutChanges() || (hasOptInChanges() && isChecked);
 
     // Create the content to render
     const content = (
         <ShadowDOMProvider shadowRoot={shadowRoot}>
-            <Heading semanticLevel="h1">Paperless Web Component</Heading>
+            <Heading semanticLevel='h1'>Paperless Web Component</Heading>
             <Divider isDark={true} />
             <Paragraph>
-                Going Paperless saves time and money by eliminating the need for paper printing and mailing of invoices
-                and payments.{' '}
-                <InlineLink onClick={() => setShowAlert(!showAlert)} target="_self">
+                Going Paperless saves time and money by eliminating the need for
+                paper printing and mailing of invoices and payments.{' '}
+                <InlineLink
+                    onClick={() => setShowAlert(!showAlert)}
+                    target='_self'>
                     Need help with this feature?
                 </InlineLink>
             </Paragraph>
 
             {showAlert && (
-                <Alert isDismissable={false} variant="info">
-                    You may elect to "Go Paperless" by checking the proper option. To finalize your enrollment in
-                    paperless billing, you must click on the "Complete Registration" link included in your confirmation
-                    email to verify. that you have received and read this notification.
+                <Alert isDismissable={false} variant='info'>
+                    You may elect to "Go Paperless" by checking the proper
+                    option. To finalize your enrollment in paperless billing,
+                    you must click on the "Complete Registration" link included
+                    in your confirmation email to verify. that you have received
+                    and read this notification.
                 </Alert>
             )}
 
-            <Alert isDismissable={false} variant="info">
-                Accounts enrolled in AutoPay must remain on Paperless Billing. Changes to paperless settings will affect
-                all users on the account.
+            <Alert isDismissable={false} variant='info'>
+                Accounts enrolled in AutoPay must remain on Paperless Billing.
+                Changes to paperless settings will affect all users on the
+                account.
             </Alert>
 
             <DynamicTable
@@ -367,19 +407,26 @@ export default function PaperlessView({ ds, shadowRoot, useShadowDOM, ShadowDOMP
                 actionConfig={paperlessActionsFunction}
                 exportConfig={{ excludeKeys: ['enrollInPaperless'] }}
                 isExportable={true}
-                title="Paperless"
+                title='Paperless'
             />
 
-            <Label inline={true} inputID={termsConditionsId} required={false} spacing="u-my-m">
+            <Label
+                inline={true}
+                inputID={termsConditionsId}
+                required={false}
+                spacing='u-my-m'
+			>
                 <Checkbox
                     checked={isChecked}
                     id={termsConditionsId}
                     onChange={handleCheckboxChange}
-                    spacing="u-ml-none"
+                    spacing='u-ml-none'
                 />
                 <span>
                     By enabling Paperless, I agree to the{' '}
-                    <InlineLink href="https://invoicecloud.net/payer-terms-conditions" target="_blank">
+                    <InlineLink
+                        href='https://invoicecloud.net/payer-terms-conditions'
+                        target='_blank'>
                         Invoice Cloud Terms and Conditions
                     </InlineLink>
                 </span>
@@ -389,8 +436,8 @@ export default function PaperlessView({ ds, shadowRoot, useShadowDOM, ShadowDOMP
                 clickHandler={() => {}}
                 disabled={!isButtonEnabled}
                 icon={<ChevronRight />}
-                iconPosition="end"
-                text="Save my changes"
+                iconPosition='end'
+                text='Save my changes'
             />
         </ShadowDOMProvider>
     );
@@ -400,9 +447,5 @@ export default function PaperlessView({ ds, shadowRoot, useShadowDOM, ShadowDOMP
         render(content);
     }
 
-    return (
-    <>
-        {/* This component renders to shadow DOM */}
-    </>
-);
+    return <>{/* This component renders to shadow DOM */}</>;
 }
