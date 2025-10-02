@@ -248,7 +248,8 @@ class InvoiceCloudPaperlessElement extends HTMLElement {
                 { default: PrimaryButton },
                 { default: DynamicTable },
                 { ChevronRight },
-				{ getDesignSystemCssText, getComponentStylesCssText },
+				dsCssMod,
+				compCssMod,
             ] = await Promise.all([
                 import('remoteDesignSystem/useShadowDOM'), 
                 import('remoteDesignSystem/ShadowDOMProvider'), 
@@ -265,6 +266,12 @@ class InvoiceCloudPaperlessElement extends HTMLElement {
                 import('remoteDesignSystem/DesignSystemShadowCss'),
                 import('remoteDesignSystem/ComponentStylesCss'),
             ]);
+
+			// Be resilient to named vs default exports
+			const getDesignSystemCssText =
+				(dsCssMod as any).getDesignSystemCssText ?? (dsCssMod as any).default;
+			const getComponentStylesCssText =
+				(compCssMod as any).getComponentStylesCssText ?? (compCssMod as any).default;
 
             console.log('✅ All modules loaded successfully');
 
@@ -288,8 +295,10 @@ class InvoiceCloudPaperlessElement extends HTMLElement {
                 React.createElement(PaperlessView, {
                     ds,
                     shadowRoot: this.shadow,
-                    useShadowDOM, // Pass the hook
-                    ShadowDOMProvider, // Pass the provider
+                    useShadowDOM,
+                    ShadowDOMProvider,
+					getDesignSystemCssText,
+					getComponentStylesCssText,
                 })
             );
 
@@ -336,14 +345,9 @@ class InvoiceCloudPaperlessElement extends HTMLElement {
 
 export function registerInvoiceCloudPaperlessElement() {
     if (!customElements.get('invoicecloud-paperless')) {
-        customElements.define(
-            'invoicecloud-paperless',
-            InvoiceCloudPaperlessElement
-        );
+        customElements.define('invoicecloud-paperless', InvoiceCloudPaperlessElement);
         console.log('InvoiceCloud Paperless custom element registered');
     } else {
-        console.warn(
-            'InvoiceCloud Paperless custom element already registered'
-        );
+        console.warn('InvoiceCloud Paperless custom element already registered');
     }
 }
