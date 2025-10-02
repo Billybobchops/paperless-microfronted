@@ -236,7 +236,7 @@ class InvoiceCloudPaperlessElement extends HTMLElement {
 
         try {
             const [
-                { default: useShadowDOM },
+                // { default: useShadowDOM },
 				{ default: ShadowDOMProvider },
                 { default: Alert },
                 { default: Checkbox },
@@ -251,7 +251,7 @@ class InvoiceCloudPaperlessElement extends HTMLElement {
 				dsCssMod,
 				compCssMod,
             ] = await Promise.all([
-                import('remoteDesignSystem/useShadowDOM'), 
+                // import('remoteDesignSystem/useShadowDOM'), 
                 import('remoteDesignSystem/ShadowDOMProvider'), 
                 import('remoteDesignSystem/Alert'),
                 import('remoteDesignSystem/Checkbox'),
