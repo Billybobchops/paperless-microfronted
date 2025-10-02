@@ -273,6 +273,21 @@ class InvoiceCloudPaperlessElement extends HTMLElement {
 			const getComponentStylesCssText =
 				(compCssMod as any).getComponentStylesCssText ?? (compCssMod as any).default;
 
+			const ensureStyle = (id: string, css: string) => {
+                if (
+                    !this.shadow.querySelector<HTMLStyleElement>(
+                        `style[data-id="${id}"]`
+                    )
+                ) {
+                    const s = document.createElement('style');
+                    s.setAttribute('data-id', id);
+                    s.textContent = css;
+                    this.shadow.appendChild(s);
+                }
+            };
+            ensureStyle('ic-ds-root', getDesignSystemCssText());
+            ensureStyle('ic-ds-components', getComponentStylesCssText());
+
             console.log('✅ All modules loaded successfully');
 
             // 2) Create the design system object
@@ -295,10 +310,10 @@ class InvoiceCloudPaperlessElement extends HTMLElement {
                 React.createElement(PaperlessView, {
                     ds,
                     shadowRoot: this.shadow,
-                    useShadowDOM,
+                    // useShadowDOM,
                     ShadowDOMProvider,
-					getDesignSystemCssText,
-					getComponentStylesCssText,
+					// getDesignSystemCssText,
+					// getComponentStylesCssText,
                 })
             );
 

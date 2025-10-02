@@ -209,19 +209,19 @@ export type DS = {
 type Props = {
     ds: DS;
     shadowRoot?: ShadowRoot;
-	useShadowDOM: any;
+	// useShadowDOM: any;
 	ShadowDOMProvider: any;
-	getDesignSystemCssText: () => string;
-	getComponentStylesCssText: () => string;
+	// getDesignSystemCssText: () => string;
+	// getComponentStylesCssText: () => string;
 };
 
 export default function PaperlessView({
     ds,
     shadowRoot,
-    useShadowDOM,
+    // useShadowDOM,
     ShadowDOMProvider,
-    getDesignSystemCssText,
-    getComponentStylesCssText,
+    // getDesignSystemCssText,
+    // getComponentStylesCssText,
 }: Props) {
     const {
         Alert,
@@ -237,10 +237,10 @@ export default function PaperlessView({
     } = ds;
 
     // Use the hook for setup only (no rendering)
-    const { render } = useShadowDOM({
-        existingShadowRoot: shadowRoot!,
-        styles: [getDesignSystemCssText(), getComponentStylesCssText()],
-    });
+    // const { render } = useShadowDOM({
+    //     existingShadowRoot: shadowRoot!,
+    //     styles: [getDesignSystemCssText(), getComponentStylesCssText()],
+    // });
 
     const termsConditionsId = useId();
     const [showAlert, setShowAlert] = useState(false);
@@ -442,10 +442,16 @@ export default function PaperlessView({
         </ShadowDOMProvider>
     );
 
-    // Render to shadow DOM if available
-    if (shadowRoot) {
-        render(content);
-    }
+	return ShadowDOMProvider && shadowRoot ? (
+        <ShadowDOMProvider shadowRoot={shadowRoot}>{content}</ShadowDOMProvider>
+    ) : (
+        content
+    );
 
-    return <>{/* This component renders to shadow DOM */}</>;
+    // // Render to shadow DOM if available
+    // if (shadowRoot) {
+    //     render(content);
+    // }
+
+    // return <>{/* This component renders to shadow DOM */}</>;
 }
