@@ -37,6 +37,7 @@ class InvoiceCloudPaperlessElement extends HTMLElement {
         // Show loading state
         this.showLoading();
 
+		// See DependencyInjection.md for explanation of this approach
         try {
             const [
 				{ default: ShadowDOMProvider },
