@@ -1,4 +1,9 @@
+:host {
+	--invoicecloud-paperless-background: #fff;
+}
+
 .displayContainer {
+	background-color: var(--invoicecloud-paperless-background);
     max-width: 1000px;
     margin: var(--invoicecloud-spacing-l) auto;
     padding: var(--invoicecloud-spacing-m);
