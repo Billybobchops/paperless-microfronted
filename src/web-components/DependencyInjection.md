@@ -55,6 +55,7 @@ const Chart = React.lazy(() => import('remoteDesignSystem/Chart'));
 <Suspense fallback={<Spinner />}>
   {showChart && <Chart data={...} />}
 </Suspense>
+```
 
 # Drawbacks of Blanket Lazy Loading
 
