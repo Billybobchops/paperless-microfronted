@@ -11,6 +11,7 @@ export type DS = {
     Paragraph: React.ComponentType<any>;
     PrimaryButton: React.ComponentType<any>;
     DynamicTable: React.ComponentType<any>;
+	Dialog: React.ComponentType<any>;
     ChevronRight: React.ComponentType<any>;
 };
 
@@ -35,6 +36,7 @@ export default function PaperlessView({
         Paragraph,
         PrimaryButton,
         DynamicTable,
+		Dialog,
         ChevronRight,
     } = ds;
 
@@ -235,6 +237,18 @@ export default function PaperlessView({
                 iconPosition='end'
                 text='Save my changes'
             />
+
+			<Dialog
+                title="This is a test dialog"
+                TriggerElement={props => (
+                    <PrimaryButton {...props} disabled={false} text="Test Dialog" variant="alternate" />
+                )}
+				variant="alternate"
+            >
+                <Paragraph>
+                    This dialog is being shown to demonstrate the Dialog component in the context of a shadow DOM.
+                </Paragraph>
+            </Dialog>
         </ShadowDOMProvider>
     );
 
