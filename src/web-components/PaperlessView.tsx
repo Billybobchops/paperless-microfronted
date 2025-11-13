@@ -11,7 +11,6 @@ export type DS = {
     Paragraph: React.ComponentType<any>;
     PrimaryButton: React.ComponentType<any>;
     DynamicTable: React.ComponentType<any>;
-	Dialog: React.ComponentType<any>;
     ChevronRight: React.ComponentType<any>;
 };
 
@@ -36,7 +35,6 @@ export default function PaperlessView({
         Paragraph,
         PrimaryButton,
         DynamicTable,
-		Dialog,
         ChevronRight,
     } = ds;
 
@@ -171,84 +169,74 @@ export default function PaperlessView({
     // Create the content to render
     const content = (
         <ShadowDOMProvider shadowRoot={shadowRoot}>
-            <Heading semanticLevel='h1'>Paperless Web Component</Heading>
-            <Divider isDark={true} />
-            <Paragraph>
-                Going Paperless saves time and money by eliminating the need for
-                paper printing and mailing of invoices and payments.{' '}
-                <InlineLink
-                    onClick={() => setShowAlert(!showAlert)}
-                    target='_self'>
-                    Need help with this feature?
-                </InlineLink>
-            </Paragraph>
+			<div className='u-px-l u-py-l'>
+				<Heading semanticLevel='h1'>Paperless Web Component</Heading>
+				<Divider isDark={true} />
+				<Paragraph>
+					Going Paperless saves time and money by eliminating the need for
+					paper printing and mailing of invoices and payments.{' '}
+					<InlineLink
+						onClick={() => setShowAlert(!showAlert)}
+						target='_self'>
+						Need help with this feature?
+					</InlineLink>
+				</Paragraph>
 
-            {showAlert && (
-                <Alert isDismissable={false} variant='info'>
-                    You may elect to "Go Paperless" by checking the proper
-                    option. To finalize your enrollment in paperless billing,
-                    you must click on the "Complete Registration" link included
-                    in your confirmation email to verify. that you have received
-                    and read this notification.
-                </Alert>
-            )}
+				{showAlert && (
+					<Alert isDismissable={false} variant='info'>
+						You may elect to "Go Paperless" by checking the proper
+						option. To finalize your enrollment in paperless billing,
+						you must click on the "Complete Registration" link included
+						in your confirmation email to verify. that you have received
+						and read this notification.
+					</Alert>
+				)}
 
-            <Alert isDismissable={false} variant='info'>
-                Accounts enrolled in AutoPay must remain on Paperless Billing.
-                Changes to paperless settings will affect all users on the
-                account.
-            </Alert>
+				<Alert isDismissable={false} variant='info'>
+					Accounts enrolled in AutoPay must remain on Paperless Billing.
+					Changes to paperless settings will affect all users on the
+					account.
+				</Alert>
 
-            <DynamicTable
-                columnConfig={paperlessColumnConfig}
-                data={dummyPaperlessRowData}
-                actionConfig={paperlessActionsFunction}
-                exportConfig={{ excludeKeys: ['enrollInPaperless'] }}
-                isExportable={true}
-                title='Paperless'
-            />
+				<DynamicTable
+					columnConfig={paperlessColumnConfig}
+					data={dummyPaperlessRowData}
+					actionConfig={paperlessActionsFunction}
+					exportConfig={{ excludeKeys: ['enrollInPaperless'] }}
+					isExportable={true}
+					title='Paperless'
+				/>
 
-            <Label
-                inline={true}
-                inputID={termsConditionsId}
-                required={false}
-                spacing='u-my-m'
-			>
-                <Checkbox
-                    checked={isChecked}
-                    id={termsConditionsId}
-                    onChange={handleCheckboxChange}
-                    spacing='u-ml-none'
-                />
-                <span>
-                    By enabling Paperless, I agree to the{' '}
-                    <InlineLink
-                        href='https://invoicecloud.net/payer-terms-conditions'
-                        target='_blank'>
-                        Invoice Cloud Terms and Conditions
-                    </InlineLink>
-                </span>
-            </Label>
+				<Label
+					inline={true}
+					inputID={termsConditionsId}
+					required={false}
+					spacing='u-my-m'
+				>
+					<Checkbox
+						checked={isChecked}
+						id={termsConditionsId}
+						onChange={handleCheckboxChange}
+						spacing='u-ml-none'
+					/>
+					<span>
+						By enabling Paperless, I agree to the{' '}
+						<InlineLink
+							href='https://invoicecloud.net/payer-terms-conditions'
+							target='_blank'>
+							Invoice Cloud Terms and Conditions
+						</InlineLink>
+					</span>
+				</Label>
 
-            <PrimaryButton
-                clickHandler={() => {}}
-                disabled={!isButtonEnabled}
-                icon={<ChevronRight />}
-                iconPosition='end'
-                text='Save my changes'
-            />
-
-			<Dialog
-                title="This is a test dialog"
-                TriggerElement={props => (
-                    <PrimaryButton {...props} disabled={false} text="Test Dialog" variant="alternate" />
-                )}
-				variant="alternate"
-            >
-                <Paragraph>
-                    This dialog is being shown to demonstrate the Dialog component in the context of a shadow DOM.
-                </Paragraph>
-            </Dialog>
+				<PrimaryButton
+					clickHandler={() => {}}
+					disabled={!isButtonEnabled}
+					icon={<ChevronRight />}
+					iconPosition='end'
+					text='Save my changes'
+				/>
+			</div>
         </ShadowDOMProvider>
     );
 

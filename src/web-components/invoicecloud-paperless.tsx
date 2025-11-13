@@ -50,7 +50,6 @@ class InvoiceCloudPaperlessElement extends HTMLElement {
                 { default: Paragraph },
                 { default: PrimaryButton },
                 { default: DynamicTable },
-				{ default: Dialog },
                 { ChevronRight },
 				dsCssMod,
 				compCssMod,
@@ -65,7 +64,6 @@ class InvoiceCloudPaperlessElement extends HTMLElement {
                 import('remoteDesignSystem/Paragraph'),
                 import('remoteDesignSystem/PrimaryButton'),
                 import('remoteDesignSystem/DynamicTable'),
-				import('remoteDesignSystem/Dialog'),
                 import('remoteDesignSystem/Icon'),
                 import('remoteDesignSystem/DesignSystemShadowCss'),
                 import('remoteDesignSystem/ComponentStylesCss'),
@@ -105,7 +103,6 @@ class InvoiceCloudPaperlessElement extends HTMLElement {
                 Paragraph,
                 PrimaryButton,
                 DynamicTable,
-				Dialog,
                 ChevronRight,
             };
 

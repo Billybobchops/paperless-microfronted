@@ -123,7 +123,7 @@ const Paperless = () => {
     const isButtonEnabled = hasOptOutChanges() || (hasOptInChanges() && isChecked);
 
     return (
-        <>
+		<div className='u-px-l u-py-l'>
             <Heading semanticLevel="h1">Paperless Web Component</Heading>
             <Divider isDark={true} />
             <Paragraph>
@@ -178,7 +178,7 @@ const Paperless = () => {
                 iconPosition="end"
                 text="Save my changes"
             />
-        </>
+		</div>
     );
 };
 
